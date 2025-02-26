@@ -2,10 +2,15 @@ FROM python:3.8-slim-buster
 
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip3 install -r requirements.txt
+# Install pipenv
+RUN pip install pipenv
 
-ADD . .
+COPY Pipfile ./
+COPY Pipfile.lock ./
+
+RUN pipenv install --deploy --system
+
+COPY . .
 
 EXPOSE 5000
 
