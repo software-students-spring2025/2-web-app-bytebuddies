@@ -69,7 +69,7 @@ def create_app():
     @login_required
     def add_todo_form():
         return render_template("add_todo.html")
-    
+
     @app.route("/todos/<id>/edit", methods=["GET"])
     @login_required
     def edit_todo_form(id):
@@ -135,7 +135,7 @@ def create_app():
             "name": name,
             "message": message,
             "created_at": datetime.utcnow(),
-            "user_id": current_user.id, 
+            "user_id": current_user.id,
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
