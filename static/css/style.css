@@ -126,3 +126,64 @@ body {
     border: 1px solid #f5c6cb;
 }
 
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.todo-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.todo-buttons form,
+.todo-buttons a {
+  display: inline-block;
+}
+
+.todo-buttons button,
+.todo-buttons a {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  color: white;
+}
+
+.btn-success {
+  background-color: #217346;
+}
+
+.btn-info {
+  background-color: #1E4B8F;
+}
+
+.btn-warning {
+  background-color: #E3A008;
+  color: black;
+}
+
+.btn-danger {
+  background-color: #B22222;
+}
+
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  opacity: 0.8;
+}
+

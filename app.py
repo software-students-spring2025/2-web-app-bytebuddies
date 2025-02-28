@@ -136,10 +136,19 @@ def create_app():
             "message": message,
             "created_at": datetime.utcnow(),
             "user_id": current_user.id,
+            "status": "unfinished",
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
         return redirect(url_for("home"))
+    
+    @app.route("/todos/<id>/finish", methods=["POST"])
+    def finish_task(id):
+        todo = db.todos.find_one({"_id": ObjectId(id)})
+        if todo:
+            db.todos.update_one({"_id": ObjectId(id)}, {"$set": {"status": "finished"}})
+            flash("Task marked as finished!")
+        return redirect(url_for("get_todos"))
 
     @app.route("/todos/<id>", methods=["POST"])
     @login_required
