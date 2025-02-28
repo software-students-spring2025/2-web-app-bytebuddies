@@ -12,6 +12,7 @@ services:
       - MONGO_URI=mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-secret}@mongodb:27017/${MONGO_DBNAME:-todo_app}?authSource=admin
       - FLASK_APP=app.py
       - FLASK_ENV=${FLASK_ENV:-development}
+      - FLASK_RUN_PORT=8000
     volumes:
       - ./:/app
     depends_on:
