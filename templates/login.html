@@ -7,17 +7,6 @@
     <button id="signupToggle" onclick="showSignup()">Signup</button>
   </div>
 
-  <!-- Display Flash Messages -->
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class="flash-messages">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
   <!-- Login Form -->
   <div id="loginForm" class="auth-form">
     <h2>Login</h2>
