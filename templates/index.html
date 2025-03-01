@@ -1,27 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Todo List</h2>
+<h2 style="text-align: center;">Todo List</h2>
 
-<form action="{{ url_for('get_todos') }}" method="GET">
+<form action="{{ url_for('get_todos') }}" method="GET" class="search-form">
   <input type="text" name="q" placeholder="Search todos...">
   <button type="submit">Search</button>
 </form>
 
-<ul>
+<div class="todo-container">
   <ul class="todo-list">
     {% for todo in todos %}
         <li>
-            <div>
-                <strong>{{ todo.name }}</strong>: {{ todo.message }}
+            <div class="todo-content">
+                <div class="todo-title"><strong>{{ todo.name }}</strong></div>
+                <div class="todo-message">{{ todo.message }}</div>
             </div>
     
             <div class="todo-buttons">
                 {% if todo.status == "unfinished" %}
                     <form action="{{ url_for('finish_task', id=todo._id) }}" method="POST">
-                        <button type="submit" class="btn-success">Mark as Done</button>
+                        <button type="submit" class="btn-success">Done</button>
                     </form>
                 {% else %}
-                    <span style="color: green; font-weight: bold;">✔ Finished</span>
+                    <div class="finished-btn">
+                        <span class="task-complete">✓ Done</span>
+                    </div>
                 {% endif %}
     
                 <a href="{{ url_for('get_todo', id=todo._id) }}" class="btn-info">View</a>
@@ -33,7 +36,6 @@
             </div>
         </li>
     {% endfor %}
-    </ul>
-    
-</ul>
+  </ul>
+</div>
 {% endblock %}
