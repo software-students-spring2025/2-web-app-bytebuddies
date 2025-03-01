@@ -141,14 +141,20 @@ def create_app():
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
         return redirect(url_for("home"))
-    
+
     @app.route("/todos/<id>/finish", methods=["POST"])
+    @login_required
     def finish_task(id):
-        todo = db.todos.find_one({"_id": ObjectId(id)})
+        todo = db.todos.find_one({"_id": ObjectId(id), "user_id": current_user.id})
         if todo:
-            db.todos.update_one({"_id": ObjectId(id)}, {"$set": {"status": "finished"}})
+            db.todos.update_one(
+                {"_id": ObjectId(id), "user_id": current_user.id},
+                {"$set": {"status": "finished"}},
+            )
             flash("Task marked as finished!")
-        return redirect(url_for("get_todos"))
+        else:
+            flash("Task not found or unauthorized", "error")
+        return redirect(url_for("home"))
 
     @app.route("/todos/<id>", methods=["POST"])
     @login_required
