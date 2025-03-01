@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Todo List</h2>
+<h2 style="text-align: center;">Todo List</h2>
 
 <form action="{{ url_for('get_todos') }}" method="GET" class="search-form">
   <input type="text" name="q" placeholder="Search todos...">
   <button type="submit">Search</button>
 </form>
 
-<ul>
+<div class="todo-container">
   <ul class="todo-list">
     {% for todo in todos %}
         <li>
@@ -36,7 +36,6 @@
             </div>
         </li>
     {% endfor %}
-    </ul>
-    
-</ul>
+  </ul>
+</div>
 {% endblock %}
