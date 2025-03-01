@@ -11,8 +11,9 @@
   <ul class="todo-list">
     {% for todo in todos %}
         <li>
-            <div>
-                <strong>{{ todo.name }}</strong>: {{ todo.message }}
+            <div class="todo-content">
+                <div class="todo-title"><strong>{{ todo.name }}</strong></div>
+                <div class="todo-message">{{ todo.message }}</div>
             </div>
     
             <div class="todo-buttons">
@@ -21,7 +22,9 @@
                         <button type="submit" class="btn-success">Done</button>
                     </form>
                 {% else %}
-                    <span class="btn-success" style="opacity: 0.7;">✔ Finished</span>
+                    <div class="finished-btn">
+                        <span class="task-complete">✓ Done</span>
+                    </div>
                 {% endif %}
     
                 <a href="{{ url_for('get_todo', id=todo._id) }}" class="btn-info">View</a>

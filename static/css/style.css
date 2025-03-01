@@ -200,49 +200,81 @@ body {
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  padding: 10px;
-  margin-bottom: 12px;
+  padding: 8px;
+  margin-bottom: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
-.todo-list li > div:first-child {
-  margin-bottom: 10px;
+.todo-content {
+  margin-bottom: 8px;
   word-break: break-word;
+}
+
+.todo-title {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.todo-message {
+  color: #555;
+  font-size: 14px;
 }
 
 .todo-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 5px;
   justify-content: center;
+  overflow-x: auto;
 }
 
 .todo-buttons form,
 .todo-buttons a,
-.todo-buttons span {
+.todo-buttons .finished-btn {
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 0;
 }
 
 .todo-buttons button,
 .todo-buttons a,
-.todo-buttons span.btn-success {
-  padding: 6px 10px;
+.todo-buttons .finished-btn span {
+  padding: 6px 8px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   border: none;
   text-decoration: none;
   color: white;
   text-align: center;
-  width: 65px;
-  height: 30px;
-  line-height: 18px;
+  width: 60px;
+  height: 28px;
+  line-height: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.task-complete {
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-size: 13px;
+  text-decoration: none;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  line-height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  color: #4CAF50 !important;
+  background: none !important;
+  border: 1px dashed #4CAF50;
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {
@@ -263,6 +295,10 @@ body {
 
 .btn-success {
   background-color: #217346;
+}
+
+.finished-btn {
+  width: 60px;
 }
 
 .btn-info {
