@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Todo List</h2>
 
-<form action="{{ url_for('get_todos') }}" method="GET">
+<form action="{{ url_for('get_todos') }}" method="GET" class="search-form">
   <input type="text" name="q" placeholder="Search todos...">
   <button type="submit">Search</button>
 </form>
