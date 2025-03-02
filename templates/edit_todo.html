@@ -12,6 +12,14 @@
     <label for="fmessage">Message:</label>
     <input type="text" id="fmessage" name="fmessage" value="{{ todo.message }}" required>
   </div>
+  <div>
+    <label for="fpriority">Priority</label>
+    <select name="fpriority" id="fpriority">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+  </div>
   <button type="submit">Update Todo</button>
 </form>
 {% endblock %}

@@ -13,6 +13,7 @@
         <li>
             <div class="todo-content">
                 <div class="todo-title"><strong>{{ todo.name }}</strong></div>
+                <div class="todo-priority {{ todo.priority|lower }}">{{ todo.priority }} Priority</div>
                 <div class="todo-message">Description: {{ todo.message }}</div>
             </div>
     

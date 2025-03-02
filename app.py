@@ -128,6 +128,7 @@ def create_app():
     def create_todo():
         name = request.form.get("name")
         message = request.form.get("message")
+        priority = request.form.get("priority")
         if not name or not message:
             flash("Missing name or message!", "error")
             return "Missing name or message", 400
@@ -137,6 +138,7 @@ def create_app():
             "created_at": datetime.utcnow(),
             "user_id": current_user.id,
             "status": "unfinished",
+            "priority" : priority
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
@@ -161,6 +163,7 @@ def create_app():
     def edit_todo(id):
         name = request.form.get("fname")
         message = request.form.get("fmessage")
+        priority = request.form.get("fpriority")
         if not name or not message:
             return "Missing name or message", 400
         # Ensure the todo belongs to the current user.
@@ -175,6 +178,7 @@ def create_app():
                     "$set": {
                         "name": name,
                         "message": message,
+                        "priority": priority,
                         "updated_at": datetime.utcnow(),
                     }
                 },
