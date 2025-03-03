@@ -2,9 +2,14 @@
 {% block content %}
 <h2 style="text-align: center;">Todo List</h2>
 
-<form action="{{ url_for('get_todos') }}" method="GET" class="search-form">
+<form action="{{ url_for('get_todos') }}" method="GET" class="search-form" id="search-form">
   <input type="text" name="q" placeholder="Search todos...">
   <button type="submit">Search</button>
+
+  <select name="sort_by" id="sort-dropdown" onchange="document.getElementById('sort-form').submit();">
+    <option value="time" {% if request.args.get('sort_by') == 'time' %}selected{% endif %}>Sort by Time</option>
+    <option value="priority" {% if request.args.get('sort_by') == 'priority' %}selected{% endif %}>Sort by Priority</option>
+  </select>
 </form>
 
 <div class="todo-container">
@@ -13,7 +18,7 @@
         <li>
             <div class="todo-content">
                 <div class="todo-title"><strong>{{ todo.name }}</strong></div>
-                <div class="todo-priority {{ todo.priority|lower }}">{{ todo.priority }} Priority</div>
+                <div class="todo-priority {{ todo.priority_str|lower }}">{{ todo.priority_str }} Priority</div>
                 <div class="todo-message">Description: {{ todo.message }}</div>
             </div>
     
@@ -39,4 +44,11 @@
     {% endfor %}
   </ul>
 </div>
+
+<script>
+    document.getElementById('sort-dropdown').addEventListener('change', function() {
+        document.getElementById('search-form').submit();
+    });
+</script>
+
 {% endblock %}
