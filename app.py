@@ -83,14 +83,18 @@ def create_app():
     @login_required
     def home():
         todos = list(db.todos.find({"user_id": current_user.id}).sort("created_at", -1))
+        priority_map = {1: "High", 2: "Medium", 3: "Low"}
         for todo in todos:
             todo["_id_str"] = str(todo["_id"])
+            todo["priority_str"] = priority_map.get(todo.get("priority"), "Unknown")
         return render_template("index.html", todos=todos)
 
     @app.route("/todos", methods=["GET"])
     @login_required
     def get_todos():
         q = request.args.get("q")
+        sort_by = request.args.get("sort_by", "time")
+
         # Always filter by the current user.
         base_query = {"user_id": current_user.id}
         if q:
@@ -107,9 +111,17 @@ def create_app():
             }
         else:
             query = base_query
-        todos = list(db.todos.find(query).sort("created_at", -1))
+
+        if sort_by == "priority":
+            todos = list(db.todos.find(query).sort([("priority", 1), ("created_at", -1)]))
+        else:
+            todos = list(db.todos.find(query).sort("created_at", -1))
+
+        priority_map = {1: "High", 2: "Medium", 3: "Low"}
         for todo in todos:
             todo["_id_str"] = str(todo["_id"])
+            todo["priority_str"] = priority_map.get(todo.get("priority"), "Unknown")
+
         return render_template("index.html", todos=todos)
 
     @app.route("/todos/<id>", methods=["GET"])
@@ -138,7 +150,7 @@ def create_app():
             "created_at": datetime.utcnow(),
             "user_id": current_user.id,
             "status": "unfinished",
-            "priority" : priority
+            "priority" : int(priority)
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
@@ -178,7 +190,7 @@ def create_app():
                     "$set": {
                         "name": name,
                         "message": message,
-                        "priority": priority,
+                        "priority": int(priority),
                         "updated_at": datetime.utcnow(),
                     }
                 },
