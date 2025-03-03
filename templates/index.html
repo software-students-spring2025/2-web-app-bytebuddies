@@ -3,14 +3,23 @@
 <h2 style="text-align: center;">Todo List</h2>
 
 <form action="{{ url_for('get_todos') }}" method="GET" class="search-form" id="search-form">
-  <input type="text" name="q" placeholder="Search todos...">
-  <button type="submit">Search</button>
-
-  <select name="sort_by" id="sort-dropdown" onchange="document.getElementById('sort-form').submit();">
-    <option value="time" {% if request.args.get('sort_by') == 'time' %}selected{% endif %}>Sort by Time</option>
-    <option value="priority" {% if request.args.get('sort_by') == 'priority' %}selected{% endif %}>Sort by Priority</option>
-  </select>
-</form>
+    <input type="text" name="q" placeholder="Search todos..." value="{{ request.args.get('q', '') }}">
+    
+    <!-- Hide Completed Checkbox -->
+    <label for="hide-completed">
+      <input type="checkbox" id="hide-completed" name="hide_completed" value="true" 
+        {% if request.args.get('hide_completed') == 'true' %}checked{% endif %}>
+      Hide Completed
+    </label>
+    
+    <button type="submit">Search</button>
+    
+    <select name="sort_by" id="sort-dropdown">
+      <option value="time" {% if request.args.get('sort_by') == 'time' %}selected{% endif %}>Sort by Time</option>
+      <option value="priority" {% if request.args.get('sort_by') == 'priority' %}selected{% endif %}>Sort by Priority</option>
+    </select>
+  </form>
+  
 
 <div class="todo-container">
   <ul class="todo-list">
@@ -50,5 +59,13 @@
         document.getElementById('search-form').submit();
     });
 </script>
-
+<script>
+    document.getElementById('hide-completed').addEventListener('change', function() {
+      document.getElementById('search-form').submit();
+    });
+    document.getElementById('sort-dropdown').addEventListener('change', function() {
+      document.getElementById('search-form').submit();
+    });
+  </script>
+  
 {% endblock %}

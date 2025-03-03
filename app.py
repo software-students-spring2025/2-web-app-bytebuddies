@@ -94,9 +94,14 @@ def create_app():
     def get_todos():
         q = request.args.get("q")
         sort_by = request.args.get("sort_by", "time")
+        hide_completed = request.args.get("hide_completed", "false")
 
-        # Always filter by the current user.
+        # Base query always filters by current user
         base_query = {"user_id": current_user.id}
+        # If hide_completed is true, exclude finished tasks
+        if hide_completed == "true":
+            base_query["status"] = {"$ne": "finished"}
+
         if q:
             query = {
                 "$and": [
@@ -121,7 +126,6 @@ def create_app():
         for todo in todos:
             todo["_id_str"] = str(todo["_id"])
             todo["priority_str"] = priority_map.get(todo.get("priority"), "Unknown")
-
         return render_template("index.html", todos=todos)
 
     @app.route("/todos/<id>", methods=["GET"])
@@ -150,7 +154,7 @@ def create_app():
             "created_at": datetime.utcnow(),
             "user_id": current_user.id,
             "status": "unfinished",
-            "priority" : int(priority)
+            "priority": int(priority),
         }
         db.todos.insert_one(todo)
         flash("Task added successfully!", "success")
@@ -209,9 +213,7 @@ def create_app():
         if not todo or todo.get("user_id") != current_user.id:
             return "Todo not found or unauthorized", 404
         try:
-            result = db.todos.delete_one(
-                {"_id": ObjectId(id), "user_id": current_user.id}
-            )
+            result = db.todos.delete_one({"_id": ObjectId(id), "user_id": current_user.id})
             if result.deleted_count == 0:
                 return "Todo not found", 404
             return redirect(url_for("home"))
